@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/kaashi/',
   resolve: {
     alias: {
-      'react/jsx-runtime': 'react/jsx-runtime.js'
+      'react/jsx-runtime': 'react/jsx-runtime'
     }
   }
 })
