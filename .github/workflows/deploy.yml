@@ -28,10 +28,14 @@ jobs:
           npm install -D vite @vitejs/plugin-react tailwindcss postcss autoprefixer
           npx tailwindcss init -p
 
-      - name: Check npx and vite versions
+      - name: Check npm and npx versions
         run: |
+          npm --version
           npx --version
-          npx vite --version
+          npm run
+
+      - name: Check vite installation
+        run: npx vite --version
 
       - name: Build
         run: npm run build
