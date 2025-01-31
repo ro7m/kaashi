@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "predeploy": "npm run build",
+    "dev": "npx vite",
+    "build": "npx vite build",
+    "preview": "npx vite preview",
+    "predeploy": "npx vite build",
     "deploy": "gh-pages -d dist"
   }
 }
