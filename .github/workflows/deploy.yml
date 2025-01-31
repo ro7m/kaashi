@@ -1,4 +1,4 @@
-name: Deploy  App
+name: Deploy React App to GitHub Pages
 
 on:
   push:
@@ -23,7 +23,9 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install -D vite @vitejs/plugin-react
 
       - name: Build
         run: npm run build
