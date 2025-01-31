@@ -24,8 +24,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install
-          npm install -D vite @vitejs/plugin-react tailwindcss postcss autoprefixer
+          npm install --legacy-peer-deps
+          npm install -D vite @vitejs/plugin-react tailwindcss postcss autoprefixer --legacy-peer-deps
           npx tailwindcss init -p
 
       - name: Build
