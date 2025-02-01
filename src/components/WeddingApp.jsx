@@ -31,7 +31,7 @@ const WeddingApp = () => {
         Request the pleasure of your company
       </p>
       <p className={`text-2xl mb-8 transition-transform duration-1000 delay-700 ${animate ? 'translate-y-0' : 'translate-y-10'}`}>
-        June 15th, 2025
+        March 1st, 2025
       </p>
       <button
         onClick={() => setShowSecondPage(true)}
