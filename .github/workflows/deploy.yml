@@ -1,4 +1,4 @@
-name: Deploy 
+name: Deploy React App to GitHub Pages
 
 on:
   push:
@@ -15,43 +15,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       
       - name: Install Dependencies
-        run: npm ci || npm install
-
-      - name: Setup Tailwind
         run: |
-          # Create tailwind.config.js
-          echo 'module.exports = {
-            content: [
-              "./index.html",
-              "./src/**/*.{js,ts,jsx,tsx}",
-            ],
-            theme: {
-              extend: {},
-            },
-            plugins: [],
-          }' > tailwind.config.js
+          npm install
+          npm install -D tailwindcss postcss autoprefixer
+          # Use node_modules/.bin/tailwindcss explicitly
+          node_modules/.bin/tailwindcss init -p || npx tailwindcss init -p
 
-          # Create postcss.config.js
-          echo 'module.exports = {
-            plugins: {
-              tailwindcss: {},
-              autoprefixer: {},
-            },
-          }' > postcss.config.js
+      - name: Create Tailwind CSS config if it doesn't exist
+        run: |
+          if [ ! -f tailwind.config.js ]; then
+            echo "module.exports = {
+              content: [
+                './src/**/*.{js,jsx,ts,tsx}',
+                './index.html',
+              ],
+              theme: {
+                extend: {},
+              },
+              plugins: [],
+            }" > tailwind.config.js
+          fi
 
-          # Create or update src/index.css
-          mkdir -p src
-          echo '@tailwind base;
-          @tailwind components;
-          @tailwind utilities;' > src/index.css
+      - name: Create PostCSS config if it doesn't exist
+        run: |
+          if [ ! -f postcss.config.js ]; then
+            echo "module.exports = {
+              plugins: {
+                tailwindcss: {},
+                autoprefixer: {},
+              },
+            }" > postcss.config.js
+          fi
 
       - name: Build
         run: npm run build
