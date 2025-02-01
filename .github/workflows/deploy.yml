@@ -21,11 +21,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          #cache: 'npm' # Added caching for better performance
 
       - name: Install Dependencies
         run: |
-          npm ci  # Using 'npm ci' instead of 'npm install' for clean installs in CI/CD
+          npm install
           npm install -D vite @vitejs/plugin-react tailwindcss postcss autoprefixer
           npx tailwindcss init -p
 
