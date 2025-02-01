@@ -18,13 +18,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          
-
-      - name: Install
+      
+      - name: Install Dependencies
         run: |
           npm install
-          npm install -D tailwindcss postcss autoprefixer
-          ./node_modules/.bin/tailwindcss init -p
+          npm install -D vite @vitejs/plugin-react tailwindcss@latest postcss@latest autoprefixer@latest
+          npm install -g tailwindcss postcss autoprefixer
+          tailwindcss init -p
 
       - name: Build
         run: npm run build
