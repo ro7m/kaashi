@@ -22,9 +22,35 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm install -D vite @vitejs/plugin-react tailwindcss@latest postcss@latest autoprefixer@latest
-          npm install -g tailwindcss postcss autoprefixer
-          tailwindcss init -p
+          npm install -D tailwindcss postcss autoprefixer
+          # Use node_modules/.bin/tailwindcss explicitly
+          node_modules/.bin/tailwindcss init -p || npx tailwindcss init -p
+
+      - name: Create Tailwind CSS config if it doesn't exist
+        run: |
+          if [ ! -f tailwind.config.js ]; then
+            echo "module.exports = {
+              content: [
+                './src/**/*.{js,jsx,ts,tsx}',
+                './index.html',
+              ],
+              theme: {
+                extend: {},
+              },
+              plugins: [],
+            }" > tailwind.config.js
+          fi
+
+      - name: Create PostCSS config if it doesn't exist
+        run: |
+          if [ ! -f postcss.config.js ]; then
+            echo "module.exports = {
+              plugins: {
+                tailwindcss: {},
+                autoprefixer: {},
+              },
+            }" > postcss.config.js
+          fi
 
       - name: Build
         run: npm run build
