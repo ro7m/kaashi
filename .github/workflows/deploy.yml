@@ -1,4 +1,4 @@
-name: Deploy App
+name: Deploy React App to GitHub Pages
 
 on:
   push:
@@ -14,24 +14,22 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      - name: Install Dependencies
+      - name: Install
         run: |
           npm install
-          npm install -D vite @vitejs/plugin-react tailwindcss postcss autoprefixer
-          npm exec tailwindcss init -p
+          npm install -D tailwindcss postcss autoprefixer
+          ./node_modules/.bin/tailwindcss init -p
 
       - name: Build
         run: npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
